@@ -4,8 +4,6 @@ An interactive simulator of phyllotaxis — the natural pattern of leaf, seed, a
 
 Run the simulation and watch the famous Fibonacci spirals emerge from simple rules — the same spirals you can see in sunflowers, pine cones, and cacti.
 
-![Phyllotaxis spiral](https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Sunflower_head_2011_G1.jpg/800px-Sunflower_head_2011_G1.jpg)
-
 ## What you can do
 
 - Tweak parameters and see how they affect the pattern

@@ -7,7 +7,6 @@ import {
   type SimConfig,
   type KernelConfig,
   defaultConfig,
-  defaultCustomParams,
   cloneConfig,
   PRESETS
 } from '../sim/config';

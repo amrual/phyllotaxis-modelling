@@ -97,7 +97,7 @@ export function render(
  */
 export function renderMetrics(
   ctx: CanvasRenderingContext2D,
-  width: number,
+  _width: number,
   metrics: { mean: number; stdDev: number; count: number },
   primordiaCount: number,
   totalPrimordia: number

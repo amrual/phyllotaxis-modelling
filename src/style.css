@@ -63,7 +63,7 @@
   --space-xl: 24px;
 
   /* Header height */
-  --header-height: 52px;
+  --header-height: 64px;
 }
 
 /* =============================================================================
@@ -92,72 +92,178 @@ html, body {
    ============================================================================= */
 
 #site-header {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
+  z-index: 50;
+  background: rgba(249, 245, 233, 0.95); /* matches web header parchment/95 */
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(238, 220, 176, 0.5); /* gold-light/50 */
+  /* Match Next site's baseline sizing (Next uses 16px root). */
+  font-family: "Crimson Pro", var(--font-heading);
+  font-size: 16px;
+}
+
+.header-inner {
+  max-width: 72rem; /* ~ max-w-6xl */
+  margin: 0 auto;
+  padding: 0 16px; /* px-4 */
   height: var(--header-height);
-  background: linear-gradient(180deg, var(--bg-parchment) 0%, var(--bg-parchment-dark) 100%);
-  border-bottom: 1px solid var(--border-medium);
-  box-shadow: var(--shadow-soft);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-xl);
-  z-index: 100;
 }
 
-.header-brand {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
+@media (min-width: 640px) {
+  .header-inner {
+    padding: 0 24px; /* sm:px-6 */
+  }
 }
 
-.header-logo {
-  width: 32px;
-  height: 32px;
-  opacity: 0.85;
-}
-
-.header-title {
-  font-family: var(--font-heading);
-  font-size: 18px;
+.site-logo {
+  font-size: 18px; /* text-lg */
   font-weight: 600;
-  color: var(--green-dark);
-  letter-spacing: 0.02em;
+  color: #365541; /* text-leaf-dark */
+  letter-spacing: 0.025em; /* tracking-wide */
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-.header-tagline {
-  font-family: var(--font-heading);
-  font-size: 12px;
-  font-style: italic;
-  color: var(--text-muted);
-  margin-left: var(--space-sm);
+@media (min-width: 640px) {
+  .site-logo {
+    font-size: 20px; /* sm:text-xl */
+  }
 }
 
-.header-nav {
+.site-logo:hover {
+  color: #375D42; /* text-leaf */
+}
+
+.site-nav {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
+  gap: 32px; /* gap-8 */
 }
 
-.header-nav a {
-  font-size: 13px;
-  color: var(--text-secondary);
+.site-nav a {
+  position: relative;
+  font-size: 16px;
+  color: #3D4A40; /* text-ink-muted */
   text-decoration: none;
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-sm);
-  transition: color 0.2s ease, background 0.2s ease;
+  padding: 4px 0;
+  transition: color 0.2s ease;
 }
 
-.header-nav a:hover {
-  color: var(--green-dark);
-  background: var(--gold-glow);
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: #D4C08A; /* gold */
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
 }
 
-.header-nav a:focus {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
+.site-nav a.is-active {
+  color: #1F2A22; /* ink */
+}
+
+.site-nav a.is-active::after {
+  transform: scaleX(1);
+}
+
+.site-nav a:hover {
+  color: #1F2A22; /* ink */
+}
+
+.site-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+.site-nav--desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .site-nav--desktop {
+    display: flex;
+  }
+}
+
+/* Mobile menu (CSS-only toggle) */
+.mobile-nav-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  color: #3D4A40; /* ink-muted */
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .mobile-nav-button {
+    display: none;
+  }
+}
+
+.mobile-nav-button:hover {
+  color: #1F2A22; /* ink */
+}
+
+.mobile-nav-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-x {
+  display: none;
+}
+
+.mobile-nav-toggle:checked ~ .header-inner .icon-bars {
+  display: none;
+}
+
+.mobile-nav-toggle:checked ~ .header-inner .icon-x {
+  display: inline;
+}
+
+.site-nav--mobile {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-top: 1px solid rgba(238, 220, 176, 0.3);
+}
+
+@media (min-width: 768px) {
+  .site-nav--mobile {
+    display: none !important;
+  }
+}
+
+/* When checked, show the mobile nav block that comes after header-inner */
+#mobile-nav-toggle:checked ~ .site-nav--mobile {
+  display: flex;
+}
+
+.site-nav--mobile a {
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: #3D4A40; /* ink-muted */
+}
+
+.site-nav--mobile a:hover {
+  color: #1F2A22; /* ink */
+  background: rgba(143, 168, 137, 0.25); /* mint-ish */
 }
 
 /* =============================================================================
@@ -167,8 +273,9 @@ html, body {
 #app {
   display: flex;
   width: 100%;
-  height: calc(100% - var(--header-height));
-  margin-top: var(--header-height);
+  /* Header is sticky (in-flow), so don't offset with margin-top. */
+  /* Fill the remaining viewport height under the header. */
+  height: calc(100vh - var(--header-height));
 }
 
 /* =============================================================================
@@ -543,7 +650,7 @@ html, body {
 
 @media (max-width: 700px) {
   :root {
-    --header-height: 48px;
+    --header-height: 64px;
   }
 
   #sidebar {
@@ -552,13 +659,7 @@ html, body {
     font-size: 12px;
   }
 
-  .header-tagline {
-    display: none;
-  }
-
-  .header-title {
-    font-size: 16px;
-  }
+  /* Keep header height consistent for seamless switching */
 }
 
 @media (max-width: 500px) {

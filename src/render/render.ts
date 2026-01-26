@@ -49,9 +49,8 @@ export function render(
 ): void {
   const { width, height } = getCanvasDimensions(canvas);
 
-  // Clear with dark background
-  ctx.fillStyle = '#1a1a2e';
-  ctx.fillRect(0, 0, width, height);
+  // Clear with transparent/parchment background to let CSS show through
+  ctx.clearRect(0, 0, width, height);
 
   if (primordia.length === 0) return;
 
@@ -66,14 +65,25 @@ export function render(
   const cy = height / 2;
 
   // Draw primordia colored by birth order
+  const baseRadius = cfg.render.pointRadius;
+  const scaleByDist = cfg.render.scaleByDistance;
+  
   for (let i = 0; i < primordia.length; i++) {
     const p = primordia[i];
     const x = cx + p.r * p.ct * scale;
     const y = cy + p.r * p.st * scale;
     const hue = (i * 360) / cfg.totalPrimordia;
 
+    // Scale point size by distance from center (natural growth simulation)
+    // Points at center: 20% of base size, points at edge: 100%
+    let pointRadius = baseRadius;
+    if (scaleByDist) {
+      const t = p.r / maxRadius; // 0 at center, 1 at edge
+      pointRadius = baseRadius * (0.2 + 0.8 * t);
+    }
+
     ctx.beginPath();
-    ctx.arc(x, y, cfg.render.pointRadius, 0, 2 * Math.PI);
+    ctx.arc(x, y, pointRadius, 0, 2 * Math.PI);
     ctx.fillStyle = `hsl(${hue}, 70%, 50%)`;
     ctx.fill();
   }
@@ -82,7 +92,7 @@ export function render(
   if (cfg.render.showRing) {
     ctx.beginPath();
     ctx.arc(cx, cy, cfg.R * scale, 0, 2 * Math.PI);
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.strokeStyle = 'rgba(201, 162, 39, 0.5)'; // Gold accent
     ctx.lineWidth = 1;
     ctx.stroke();
   }
@@ -103,7 +113,7 @@ export function renderMetrics(
   totalPrimordia: number
 ): void {
   ctx.font = '12px monospace';
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+  ctx.fillStyle = 'rgba(31, 42, 34, 0.85)'; // Deep ink color for readability on parchment
 
   const lines = [
     `Primordia: ${primordiaCount} / ${totalPrimordia}`,
@@ -139,8 +149,8 @@ export function renderFieldPlot(
   const width = rect.width;
   const height = rect.height;
 
-  // Clear
-  ctx.fillStyle = '#252540';
+  // Clear with parchment background
+  ctx.fillStyle = '#F3E6C9';
   ctx.fillRect(0, 0, width, height);
 
   if (fieldValues.length === 0) return;
@@ -159,7 +169,7 @@ export function renderFieldPlot(
 
   if (!isFinite(minVal) || !isFinite(maxVal) || minVal === maxVal) {
     // No valid data or flat
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.fillStyle = 'rgba(31, 42, 34, 0.4)';
     ctx.fillText('No field data', 10, height / 2);
     return;
   }
@@ -171,8 +181,8 @@ export function renderFieldPlot(
 
   // Draw sparkline
   ctx.beginPath();
-  ctx.strokeStyle = '#6ee7b7';
-  ctx.lineWidth = 1;
+  ctx.strokeStyle = '#375D42'; // Botanical green
+  ctx.lineWidth = 1.5;
 
   for (let i = 0; i < fieldValues.length; i++) {
     const x = padding + (i / (fieldValues.length - 1)) * plotWidth;
@@ -191,7 +201,7 @@ export function renderFieldPlot(
 
   // Labels
   ctx.font = '9px monospace';
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+  ctx.fillStyle = 'rgba(31, 42, 34, 0.6)';
   ctx.fillText(`min: ${minVal.toFixed(2)}`, padding, height - 2);
   ctx.fillText(`max: ${maxVal.toFixed(2)}`, width - 60, height - 2);
 }

@@ -54,6 +54,7 @@ export interface SimConfig {
     showMetrics: boolean;
     showFieldPlot: boolean;
     pointRadius: number;
+    scaleByDistance: boolean;  // Scale point size by distance from center (natural growth)
   };
 }
 
@@ -68,7 +69,7 @@ export function defaultConfig(): SimConfig {
     dt: 1.0,
     maxR: 3.0,
     angleSamples: 720,
-    totalPrimordia: 600,
+    totalPrimordia: 1000,
     batchSize: 30,
     kernel: {
       type: 'exp',
@@ -76,15 +77,16 @@ export function defaultConfig(): SimConfig {
       lambda: 0.18
     },
     noise: {
-      enabled: false,
-      sigmaThetaDeg: 2.0,
+      enabled: true,
+      sigmaThetaDeg: 0.1,
       seed: 12345
     },
     render: {
       showRing: true,
       showMetrics: true,
       showFieldPlot: false,
-      pointRadius: 2.5
+      pointRadius: 5.0,
+      scaleByDistance: true
     }
   };
 }

@@ -97,6 +97,7 @@ export class UI {
   private showMetricsCheckbox!: HTMLInputElement;
   private showFieldPlotCheckbox!: HTMLInputElement;
   private inputPointRadius!: HTMLInputElement;
+  private scaleByDistanceCheckbox!: HTMLInputElement;
   private updateFieldPlotBtn!: HTMLButtonElement;
 
   // Field plot canvas
@@ -238,6 +239,10 @@ export class UI {
           <label>Point radius</label>
           <input type="number" id="input-point-radius" step="0.5" min="0.5">
         </div>
+        <div class="ui-row checkbox-row">
+          <input type="checkbox" id="scale-by-distance">
+          <label for="scale-by-distance">Natural growth</label>
+        </div>
         <button id="btn-update-field-plot" class="btn btn-small">Update Field Plot</button>
       </div>
 
@@ -285,6 +290,7 @@ export class UI {
     this.showMetricsCheckbox = document.getElementById('show-metrics') as HTMLInputElement;
     this.showFieldPlotCheckbox = document.getElementById('show-field-plot') as HTMLInputElement;
     this.inputPointRadius = document.getElementById('input-point-radius') as HTMLInputElement;
+    this.scaleByDistanceCheckbox = document.getElementById('scale-by-distance') as HTMLInputElement;
     this.updateFieldPlotBtn = document.getElementById('btn-update-field-plot') as HTMLButtonElement;
 
     this.fieldPlotCanvas = document.getElementById('field-plot-canvas') as HTMLCanvasElement;
@@ -445,6 +451,7 @@ export class UI {
     this.showMetricsCheckbox.checked = cfg.render.showMetrics;
     this.showFieldPlotCheckbox.checked = cfg.render.showFieldPlot;
     this.inputPointRadius.value = String(cfg.render.pointRadius);
+    this.scaleByDistanceCheckbox.checked = cfg.render.scaleByDistance;
   }
 
   private populateKernelParamsFromConfig(kernel: KernelConfig): void {
@@ -559,7 +566,8 @@ export class UI {
         showRing: this.showRingCheckbox.checked,
         showMetrics: this.showMetricsCheckbox.checked,
         showFieldPlot: this.showFieldPlotCheckbox.checked,
-        pointRadius: getNum(this.inputPointRadius, 2.5)
+        pointRadius: getNum(this.inputPointRadius, 5.0),
+        scaleByDistance: this.scaleByDistanceCheckbox.checked
       }
     };
   }

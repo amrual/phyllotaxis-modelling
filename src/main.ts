@@ -42,6 +42,7 @@ let fieldPlotCounter = 0;
 function doRender(): void {
   render(canvas, ctx, simulator.primordia, currentConfig);
 
+  // Metrics overlay
   if (currentConfig.render.showMetrics) {
     const metrics = simulator.computeDivergenceMetrics();
     const { width } = getCanvasDimensions(canvas);

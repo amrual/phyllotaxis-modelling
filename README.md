@@ -20,3 +20,7 @@ npm run dev
 ```
 
 Open http://localhost:5173 in your browser.
+
+## Future plans
+
+- **Parastichy detection & visualization** — automatically detect and draw the spiral families (parastichies) in the pattern, showing the Fibonacci numbers (8, 13, 21, etc.) that emerge from the golden angle

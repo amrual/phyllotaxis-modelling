@@ -1,0 +1,13 @@
+# Node / package managers
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Tooling
+.vite/
+*.tsbuildinfo
+
+# OS / editor
+.DS_Store

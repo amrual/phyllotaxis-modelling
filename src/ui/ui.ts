@@ -260,6 +260,13 @@ export class UI {
       </div>
 
       <div id="validation-messages"></div>
+
+      <div class="ui-section">
+        <div class="ui-section-title">Source</div>
+        <div>
+          GitHub repo: phyllotaxis-modelling
+        </div>
+      </div>
     `;
 
     // Get references

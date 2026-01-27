@@ -264,8 +264,7 @@ export class UI {
       <div class="ui-section">
         <div class="ui-section-title">Source</div>
         <div>
-          GitHub repo:{' '}
-          <a
+          GitHub repo: <a
             href="https://github.com/amrual/phyllotaxis-modelling"
             target="_blank"
             rel="noopener noreferrer"
